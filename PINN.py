@@ -36,7 +36,8 @@ class PINNModel:
 
         # f_out: (for conveciton diffusion equation we only need first derivatives in x and t and second in x)
         c, dc_dt, d2c_dt2 = self.derivativelayer(tP_col)
-        f_out = tf.math.multiply(tP_col[:,2],d2c_dt2) + tf.math.multiply(tP_col[:,3],dc_dt) + BV1V2*tf.math.sin(c) - tP_col[:,1]
+
+        f_out = tf.reshape(tP_col[:,2], [-1,1])*tf.reshape(d2c_dt2, [-1,1]) + tf.reshape(tP_col[:,3],[-1,1])*tf.reshape(dc_dt, [-1,1]) + BV1V2*tf.math.sin(tf.reshape(c,[-1,1])) - tf.reshape(tP_col[:,1],[-1,1])
         
         # + tP_col[:,3]*tf.reshape(dc_dt, [-1,1]) + BV1V2*tf.math.sin(tf.reshape(c, [-1,1])) - tP_col[:,1]
         # c_ini_1: (for initial conditions we just evaluate base model at corresponding x, t and Pe values)

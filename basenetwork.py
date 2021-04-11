@@ -6,7 +6,7 @@ import numpy as np
 class Network:
 
     @classmethod
-    def basemodel(cls,num_inputs = 4, hidden_layers = [20,20,20,20w], activation_layers = 'tanh', num_outputs= 1):
+    def basemodel(cls,num_inputs = 4, hidden_layers = [20,20,20,20], activation_layers = 'tanh', num_outputs= 1):
 
         #Input layer
         inputs = tf.keras.layers.Input(shape = (num_inputs,))
