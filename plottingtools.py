@@ -47,93 +47,47 @@ def numerical_solver(x, t, K, V):
     return T, solution_time
 
 
-def plot_contour(
-                basemodel, K, V, N_test_points,tbounds = [0,1],
-                xbounds = [0,1],tslice = [0, 0.3,0.6], nt=1000,nx=40, levels =30, 
-                cmap = 'plasma',savename ='.\\Plots\\result.img', save=False):
+def plot_contour(basemodel, m = 0.1 , d = 0.05,tbounds = (0,20), nt = 100, nP = 100,
+                Pbounds = (0.08,0.18),PSlice = [0.01, 0.017, 0.018], cmap = 'plasma', savename ='.\\Plots\\result.img', save=False):
     
-    """
-    Plotting function that will take care of scaing and pre-processing.
-    Arguments:
-        basemodel: base Neural Network that accepts scaled x,t and Pe
-        K: Diffusion Constant
-        V: Velocity Constant
-        N_test_points: total number of domain poinnts over x and t will be N_test_points^2
-        tbounds: list or tuple of lower and upper bounds of t
-        xbounds: list or tuple of lower and upper bounds of x
-    Outputs:
-        Plot of Flow Pattern
-    """
-    x_c = xbounds[1]
-    Pe = V*x_c/K
+    tnum = np.linspace(tbounds[0], tbounds[1], nt)
+    Pnum = np.linspace(Pbounds[0], Pbounds[1], nP)  
+    t, P = np.meshgrid(tnum, Pnum)
+    mvals, dvals = np.repeat(m, nt*nP), np.repeat(d, nt*nP)
 
-    if Pe<=1:
-        Pe = 1
-        t_c = x_c**2/K
-    else:
-        t_c = x_c/V        
+    tPmd = np.stack([t.flatten(), P.flatten(), mvals, dvals], axis=-1)
+
+    u = basemodel.predict(tPmd).reshape((nt,nP))
     
-
-    t_flat = np.linspace(tbounds[0], tbounds[1], N_test_points)/t_c
-    x_flat = np.linspace(xbounds[0], xbounds[1], N_test_points)/x_c
-    t, x = np.meshgrid(t_flat, x_flat)
-
-    Peclet_Input = np.repeat(Pe,N_test_points**2)
-
-    txPe = np.stack([t.flatten(), x.flatten(), Peclet_Input], axis=-1)
-
-    u = basemodel.predict(txPe, batch_size=N_test_points)
-    u = u.reshape(t.shape)
-
     fig = plt.figure(figsize=(12,8))
     gs = GridSpec(2, 3)
     plt.subplot(gs[0, :])
-    cs1 = plt.contourf(t,x,u,cmap = cmap,levels = levels)
+    cs1 = plt.contourf(t,P,u,cmap = cmap,levels =60)
     plt.xlabel('t')
-    plt.ylabel('x')
+    plt.ylabel('Power')
     cbar = plt.colorbar(cs1)
-    cbar.set_label('c(t,x)')
-    # plot u(t=const, x) cross-sections
-    t_cross_sections = tslice
-
-    """
-    Numerical Solution
-    """
-
-    tnum = np.linspace(tbounds[0],tbounds[1],nt)/t_c
-    xnum = np.linspace(xbounds[0],xbounds[1],nx)/x_c
-    T, solution_time = numerical_solver(xnum, tnum, K,V)
-
-    """
-    Comparing Cross Sections
-    
-    """
-
+    cbar.set_label('Delta(t,P)')
+  
     idx = []
-    tnew = []
-    for t in t_cross_sections:
-        index, val = find_nearest(tnum, t)
-        tnew.append(val)
+    Pslices = []
+    for P in PSlice:
+        index, val = find_nearest(Pnum, P)
+        Pslices.append(val)
         idx.append(index)
-        
-    t_cross_sections = tnew #update cross sections with ones closest to numerical solution
 
-    t_cross_section_scaled = [t/t_c for t in t_cross_sections]
-
-    for i, t_cs in enumerate(t_cross_section_scaled):
+    for i, P_cs in enumerate(Pslices):
         plt.subplot(gs[1, i])
-        txPe = np.stack([np.full(t_flat.shape, t_cs), x_flat,np.full(t_flat.shape, Pe)], axis=-1)
+        tPmd = np.stack([tnum, np.full(tnum.shape, P_cs), np.full(tnum.shape, m), np.full(tnum.shape, d)], axis=-1)
         start = time.time()
-        u = basemodel.predict(txPe, batch_size=N_test_points)
+        u = basemodel.predict(tPmd)
         end = time.time()
-        plt.plot(x_flat, u, label = 'PINN Model')
-        plt.plot(xnum,T[:,idx[i]], color = 'red', linestyle='dashed', label = 'Numerical Solution')
-        plt.title('t = {:.2f}'.format(t_cs))
-        plt.xlabel('x')
+        plt.plot(tnum, u, label = 'PINN Model')
+        # plt.plot(xnum,T[:,idx[i]], color = 'red', linestyle='dashed', label = 'Numerical Solution')
+        plt.title('t = {:.2f}'.format(P_cs))
+        plt.xlabel('Power')
         plt.ylabel('c(t,x)')
         # plt.legend()
     PINNtime = end - start
-    #ok hello?
     plt.tight_layout()
     if save:
         plt.savefig(savename, transparent=True)

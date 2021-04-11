@@ -5,7 +5,7 @@ This function will prepare the domain data for use by the PINN
 import numpy as np
 from smt.sampling_methods import LHS
 
-def data_prep(Trange = (0,20), Prange = (0.08, 0.018), N_col= 10000, N_ini =100, 
+def data_prep(Trange = (0,20), Prange = (0.08, 0.18), N_col= 10000, N_ini =100, 
                 mrange = (0.1, 0.4), drange = (0.05, 0.15), delta0=0.1, omega0 = 0.1):
   #test
 
