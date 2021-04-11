@@ -48,8 +48,11 @@ def numerical_solver(x, t, K, V):
 
 
 def plot_contour(basemodel, m = 0.1 , d = 0.05,tbounds = (0,20), nt = 100, nP = 100,
-                Pbounds = (0.08,0.18),PSlice = [0.01, 0.017, 0.018], cmap = 'plasma', savename ='.\\Plots\\result.img', save=False):
+                Pbounds = (0.08,0.18),PSlice = [0.12, 0.15, 0.18], cmap = 'plasma', savename ='.\\Plots\\result.img', nlevels = 80, save=False):
     
+
+    assert m>=0.1 and m<=0.4 and d>=0.05 and d<= 0.15, 'Ensure m and d are within bounds of training (0.1<=m<=0.4, 0.05<d<=0.15)'
+
     tnum = np.linspace(tbounds[0], tbounds[1], nt)
     Pnum = np.linspace(Pbounds[0], Pbounds[1], nP)  
     t, P = np.meshgrid(tnum, Pnum)
@@ -62,7 +65,7 @@ def plot_contour(basemodel, m = 0.1 , d = 0.05,tbounds = (0,20), nt = 100, nP = 
     fig = plt.figure(figsize=(12,8))
     gs = GridSpec(2, 3)
     plt.subplot(gs[0, :])
-    cs1 = plt.contourf(t,P,u,cmap = cmap,levels =60)
+    cs1 = plt.contourf(t,P,u,cmap = cmap,levels =nlevels)
     plt.xlabel('t')
     plt.ylabel('Power')
     cbar = plt.colorbar(cs1)
@@ -77,22 +80,22 @@ def plot_contour(basemodel, m = 0.1 , d = 0.05,tbounds = (0,20), nt = 100, nP = 
 
     for i, P_cs in enumerate(Pslices):
         plt.subplot(gs[1, i])
-        tPmd = np.stack([tnum, np.full(tnum.shape, P_cs), np.full(tnum.shape, m), np.full(tnum.shape, d)], axis=-1)
+        tPmdslice = np.stack([tnum, np.full(tnum.shape, P_cs), np.full(tnum.shape, m), np.full(tnum.shape, d)], axis=-1)
         start = time.time()
-        u = basemodel.predict(tPmd)
+        u = basemodel.predict(tPmdslice)
         end = time.time()
         plt.plot(tnum, u, label = 'PINN Model')
         # plt.plot(xnum,T[:,idx[i]], color = 'red', linestyle='dashed', label = 'Numerical Solution')
-        plt.title('t = {:.2f}'.format(P_cs))
-        plt.xlabel('Power')
-        plt.ylabel('c(t,x)')
+        plt.title('P = {:.2f}'.format(P_cs))
+        plt.xlabel('Time (seconds)')
+        plt.ylabel('delta(P,x)')
         # plt.legend()
     PINNtime = end - start
     plt.tight_layout()
     if save:
         plt.savefig(savename, transparent=True)
     plt.show()
-    return PINNtime, solution_time 
+    return PINNtime
 
 
 def ErrorAnalysisPlot(  
