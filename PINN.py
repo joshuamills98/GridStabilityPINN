@@ -39,8 +39,7 @@ class PINNModel:
 
         f_out = tf.reshape(tP_col[:,2], [-1,1])*tf.reshape(d2c_dt2, [-1,1]) + tf.reshape(tP_col[:,3],[-1,1])*tf.reshape(dc_dt, [-1,1]) + BV1V2*tf.math.sin(tf.reshape(c,[-1,1])) - tf.reshape(tP_col[:,1],[-1,1])
         
-        # + tP_col[:,3]*tf.reshape(dc_dt, [-1,1]) + BV1V2*tf.math.sin(tf.reshape(c, [-1,1])) - tP_col[:,1]
-        # c_ini_1: (for initial conditions we just evaluate base model at corresponding x, t and Pe values)
+
         c_ini_1 = self.basemodel(tP_ini_1)
 
         # c_ini_2:

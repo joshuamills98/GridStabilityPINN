@@ -75,17 +75,6 @@ class Optimizer:
         grads = np.concatenate([ g.numpy().flatten() for g in grads ]).astype('float64')
 
         return loss, grads
-    
-    # def testing_callback(self, weights):
-    #     self.progbar.on_epoch_begin(10)
-    #     loss, _ = self.evaluate(weights)        
-    #     self.progbar.on_epoch_end(10, logs=dict(zip(self.metrics, [loss])))
-    #     self.loss_history.append(loss)
-    #     if len(self.loss_history)>50:  
-    #         if np.abs(self.loss_history[-1]-self.loss_history[-4]) < 10**(-4):
-    #             print('Stopping Condition Reached. Final Converged Value of {}'.format(self.loss_history[-1]))
-    #             elapsed = np.abs(self.total_time_elapsed + time.time() - self.start)
-    #             print('Time Elapsed = {}'.format(elapsed))
 
 
     def callback(self, weights):

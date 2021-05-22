@@ -4,3 +4,13 @@ __pycache__/optimizer.cpython-38.pyc
 __pycache__/PINN.cpython-38.pyc
 __pycache__/plottingtools.cpython-38.pyc
 __pycache__/basenetwork.cpython-38.pyc
+.vscode/settings.json
+__pycache__/basenetwork.cpython-37.pyc
+__pycache__/basenetwork.cpython-37.pyc
+.gitignore
+plots/result.jpg
+__pycache__/PINN.cpython-37.pyc
+__pycache__/optimizer.cpython-37.pyc
+.gitignore
+__pycache__/derivativelayer.cpython-37.pyc
+.gitignore
