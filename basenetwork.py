@@ -6,7 +6,7 @@ import numpy as np
 class Network:
 
     @classmethod
-    def basemodel(cls,num_inputs = 4, hidden_layers = [20,20,20,20], activation_layers = 'tanh', num_outputs= 1):
+    def basemodel(cls,num_inputs = 4, hidden_layers = [20,20,20,20], activation_layers = 'tanh', num_outputs= 1,  ub = np.array([20, 0.18, 0.4, 0.15]), lb = np.array([0, 0.08, 0.1, 0.05])):
 
         #Input layer
         inputs = tf.keras.layers.Input(shape = (num_inputs,))
@@ -14,6 +14,7 @@ class Network:
         #Use functional API to build model by chaining function calls
 
         x = inputs 
+        x = 2.0*(x-lb)/(ub - lb) - 1.0
         
         for layer_size in hidden_layers:
             x = tf.keras.layers.Dense(layer_size, activation = activation_layers)(x)
