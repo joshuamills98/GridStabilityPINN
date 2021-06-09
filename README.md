@@ -4,7 +4,7 @@ These files were developed as part of my Master's Thesis on the implementation o
 
 ![equation](https://latex.codecogs.com/gif.latex?m%5CDdot%7B%5Cdelta%7D%20&plus;d%5CDot%7B%5Cdelta%7D%20&plus;%20B_%7B12%7DV_%7B1%7DV_%7B2%7D%20%5Csin%7B%5Cdelta%7D%20-%20P%20%3D%200)
 
-This equation is relevant in the stability analysis of the electrical grid and describes the response of the *rotor angle* under changing generator loads. The equation explores the Single Machine Infinite Bus model shown below (image taken from Misyris et al. (2020):
+This equation is relevant in the stability analysis of the electrical grid and describes the response of the *rotor angle* under changing generator loads. The equation explores the Single Machine Infinite Bus model shown below (image taken from [[1]](#1)):
 
 ![image](/plots/SMIB.png "SMIB system")
 
@@ -31,10 +31,8 @@ Below shows the output of the PINN for *m=0.4* and *d=0.15*.
 * **numerical_solver.py-** Runge-Kutta numerical solution for comparison
 * **NNWights10x20.pickle-** Pre-trained weights to use for exploration of the solution
 
-@misc{GridPINN,
-      title={Physics-Informed Neural Networks for Power Systems}, 
-      author={George S. Misyris and Andreas Venzke and Spyros Chatzivasileiadis},
-      year={2020},
-      eprint={1911.03737},
-      archivePrefix={arXiv},
-      primaryClass={eess.SY}
+
+## References
+<a id="1">[1]</a> 
+George S. Misyris and Andreas Venzke and Spyros Chatzivasileiadis (2020). 
+Physics-Informed Neural Networks for Power Systems.
