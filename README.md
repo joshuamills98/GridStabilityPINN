@@ -6,18 +6,19 @@ These files were developed as part of my Master's Thesis on Physics-Informed Neu
 
 This equation is relevant in the stability analysis of the electrical grid and describes the response of the *rotor angle* under changing generator loads. The equation explores the Single Machine Infinite Bus model shown below:
 
-
+![image](.\plots\SMIB.png)
 
 While Misyris et al. 2020 has shown PINNs to be effective at modelling the output of the function for given generator inertial constant *m* and damping coefficient *d*, here I extend this work
 to explore the PINNs ability to generalize so that:
 
-![equation(https://latex.codecogs.com/gif.latex?NN%28t%2CP_%7B1%7D%2C%20m%2C%20d%29%20%5Capprox%20%5Cdelta%28t%2CP_%7B1%7D%2C%20m%2C%20d%29)
+![equation](https://latex.codecogs.com/gif.latex?NN%28t%2CP_%7B1%7D%2C%20m%2C%20d%29%20%5Capprox%20%5Cdelta%28t%2CP_%7B1%7D%2C%20m%2C%20d%29)
 
+The goal was to develop a neural network that could replace pre-existing numerical simulations which are far more taxing computationally. While the PINN showed an *4-5 x* speed up over pre-existing numerical solvers, the accuracy of the PINN was varied over the domain, future research should explore larger networks and perhaps incorporation of multiple 
+PINNs, each of which is specialized to a particular region of the solution.
 
+Below shows the output of the PINN for *m=0.4* and *d=0.15*. 
 
-To my knowledge, PINNs have not yet been implemented to solve the convection-diffusion equation and no research performed on allowing the PINN to generalize over a range of system parameters (in this case D and V) The goal is for the PINN to learn the solution
-
-equation
+![image](.\plots\result.jpg)
 
 @misc{GridPINN,
       title={Physics-Informed Neural Networks for Power Systems}, 
