@@ -6,7 +6,7 @@ These files were developed as part of my Master's Thesis on the implementation o
 
 This equation is relevant in the stability analysis of the electrical grid and describes the response of the *rotor angle* under changing generator loads. The equation explores the Single Machine Infinite Bus model shown below:
 
-![image](/plots/SMIB.png SMIB system (image taken from Misyris et al. (2020))
+![image](/plots/SMIB.png "SMIB system (image taken from Misyris et al. (2020)")
 
 While Misyris et al. 2020 has shown PINNs to be effective at modelling the output of the function for given generator inertial constant *m* and damping coefficient *d*, here I extend this work
 to explore the PINNs ability to generalize so that:
@@ -18,7 +18,7 @@ PINNs, each of which is specialized to a particular region of the solution.
 
 Below shows the output of the PINN for *m=0.4* and *d=0.15*. 
 
-![image](/plots/result.jpg Output of the PINN for *m=0.4* and *d=0.15*)
+![image](/plots/result.jpg "Output of the PINN for *m=0.4* and *d=0.15*")
 
 
 @misc{GridPINN,
