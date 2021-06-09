@@ -8,9 +8,15 @@ __pycache__/basenetwork.cpython-38.pyc
 __pycache__/basenetwork.cpython-37.pyc
 __pycache__/basenetwork.cpython-37.pyc
 .gitignore
-plots/result.jpg
 __pycache__/PINN.cpython-37.pyc
 __pycache__/optimizer.cpython-37.pyc
 .gitignore
 __pycache__/derivativelayer.cpython-37.pyc
 .gitignore
+/__pycache__
+__pycache__/basenetwork.cpython-37.pyc
+__pycache__/derivativelayer.cpython-37.pyc
+__pycache__/optimizer.cpython-37.pyc
+__pycache__/PINN.cpython-37.pyc
+.gitignore
+GridStabilityMain.ipynb
