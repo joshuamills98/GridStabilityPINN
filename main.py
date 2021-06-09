@@ -6,14 +6,12 @@ from optimizer import Optimizer
 from data_prep import data_prep
 from plottingtools import plot_contour
 import pickle
-import os
 import time
 
 """
 We will solve the equation between 0 and Xmax and 0 and Tmax
 """
 
-os.chdir('C:\\Users\\joshb\\Desktop\\Machine_Learning\\GridStabilityPINN\\')
 # Global Parameters for training
 N_col = 10000  # Number of collocation points
 N_bound_ini = 100  # Total number of boundary and initial condition points
