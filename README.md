@@ -8,12 +8,12 @@ This equation is relevant in the stability analysis of the electrical grid and d
 
 ![image](/plots/SMIB.png "SMIB system")
 
-While Misyris et al. 2020 has shown PINNs to be effective at modelling the output of the function for given generator inertial constant *m* and damping coefficient *d*, here I extend this work
+While [[1]](#1) has shown PINNs to be effective at modelling the output of the function for given generator inertial constant *m* and damping coefficient *d*, here I extend this work
 to explore the PINNs ability to generalize so that:
 
 ![equation](https://latex.codecogs.com/gif.latex?NN%28t%2CP_%7B1%7D%2C%20m%2C%20d%29%20%5Capprox%20%5Cdelta%28t%2CP_%7B1%7D%2C%20m%2C%20d%29)
 
-The goal was to develop a neural network that could replace pre-existing numerical simulations which are far more taxing computationally. While the PINN showed an *4-5x* speed up over pre-existing numerical solvers, the accuracy of the PINN was varied over the domain, future research should explore larger networks and perhaps incorporation of multiple 
+The goal was to develop a neural network that could replace pre-existing numerical simulations which are far more taxing computationally. While the PINN showed a *4-5x* speed up over pre-existing numerical solvers, the accuracy of the PINN was varied over the domain, future research should explore larger networks and perhaps incorporation of multiple 
 PINNs, each of which is specialized to a particular region of the solution.
 
 Below shows the output of the PINN for *m=0.4* and *d=0.15*. 
